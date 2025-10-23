@@ -33,23 +33,11 @@ The demo highlights Playwright’s speed, stability, and flexibility compared to
 
 ---
 
-<<<<<<< Updated upstream
-=======
 # Technologies Used
 
 -   **Playwright**: A versatile library tailored for browser automation with a focus on reliability.
 -   **TypeScript**: A statically typed superset of JavaScript.
 -   **npm**: The package manager for JavaScript.
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 # Demo site - E-commerce
 
@@ -95,36 +83,6 @@ playwright-e2e/
 ```
 
 # Configuration
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
-=======
-
-The framework can be configured through `playwright.config.ts`. Key configurations include:
-
--   Browsers: Chromium, Firefox, WebKit
--   Viewport sizes
--   Test timeouts
--   Parallel execution settings
->>>>>>> Stashed changes
-
-The framework can be configured through `playwright.config.ts`. Key configurations include:
-
--   Browsers: Chromium, Firefox, WebKit
--   Viewport sizes
--   Test timeouts
--   Parallel execution settings
->>>>>>> Stashed changes
-
-The framework can be configured through `playwright.config.ts`. Key configurations include:
-
--   Browsers: Chromium, Firefox, WebKit
--   Viewport sizes
--   Test timeouts
--   Parallel execution settings
->>>>>>> Stashed changes
 
 The framework can be configured through `playwright.config.ts`. Key configurations include:
 
@@ -133,8 +91,27 @@ The framework can be configured through `playwright.config.ts`. Key configuratio
 -   Test timeouts
 -   Parallel execution settings
 
-<<<<<<< Updated upstream
-=======
+The framework can be configured through `playwright.config.ts`. Key configurations include:
+
+-   Browsers: Chromium, Firefox, WebKit
+-   Viewport sizes
+-   Test timeouts
+-   Parallel execution settings
+
+The framework can be configured through `playwright.config.ts`. Key configurations include:
+
+-   Browsers: Chromium, Firefox, WebKit
+-   Viewport sizes
+-   Test timeouts
+-   Parallel execution settings
+
+The framework can be configured through `playwright.config.ts`. Key configurations include:
+
+-   Browsers: Chromium, Firefox, WebKit
+-   Viewport sizes
+-   Test timeouts
+-   Parallel execution settings
+
 # For future improvements and considerations
 
 -   Using Environment Variables - to create .env file and use library like dotenv to load the sensitive data.
@@ -160,38 +137,6 @@ A repo with Postman collection for API testing of the same website is available 
 | Accessibility - Axe-core   | :white_check_mark:    |
 | Visual Comparisons         | :black_square_button: |
 
-# Page Object Model (POM)
-
-Page Object Model (POM) is a design pattern that creates a repository for storing all web elements. In POM, consider each web page of an application as a separate class file. Each class file will contain only corresponding web page elements. Page objects are organized under the `/pages/` directory, making the test code more readable, maintainable, and less prone to duplication.
-
-## Benefits of POM
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
-=======
-
--   **Maintainability**: Changes in the UI require updates only in the page classes.
--   **Reusability**: Common operations can be reused across different tests.
--   **Readability**: Tests are more readable and easier to understand.
->>>>>>> Stashed changes
-
--   **Maintainability**: Changes in the UI require updates only in the page classes.
--   **Reusability**: Common operations can be reused across different tests.
--   **Readability**: Tests are more readable and easier to understand.
->>>>>>> Stashed changes
-
--   **Maintainability**: Changes in the UI require updates only in the page classes.
--   **Reusability**: Common operations can be reused across different tests.
--   **Readability**: Tests are more readable and easier to understand.
->>>>>>> Stashed changes
-
--   **Maintainability**: Changes in the UI require updates only in the page classes.
--   **Reusability**: Common operations can be reused across different tests.
--   **Readability**: Tests are more readable and easier to understand.
-
->>>>>>> Stashed changes
 # E2E test
 
 The e2e tests are located in `/tests/e2e/` folder. They cover scenarios such as user authentication, navigation, and interactions with different pages.
@@ -321,30 +266,3 @@ Usually after Playwright update, browsers need to be updated
 ```bash
 npx playwright install
 ```
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-# Checklist
-
-| Task                          | Status              | 
-|-------------------------------|---------------------| 
-| GitHub Actions                | :white_check_mark:  |
-| Page Object Model             | :white_check_mark:  |
-| E2E tests                      | :white_check_mark:  |
-| API tests                     | :white_check_mark:  |
-| Mobile ViewPorts tests        | :white_check_mark:  |
-| FakerJS                       | :white_check_mark:  |
-| Reuse authentication state    | :white_check_mark:  |
-| Multiple browser tabs         | :white_check_mark:  |
-| Data driven tests             | :white_check_mark:  |
-| Accessibility - Axe-core      | :white_check_mark:  |
-| Visual Comparisons            | :black_square_button: |
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
