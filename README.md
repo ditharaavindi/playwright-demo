@@ -3,7 +3,11 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg "Playwright logo")
+=======
+![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
+>>>>>>> Stashed changes
 =======
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
 >>>>>>> Stashed changes
@@ -54,6 +58,9 @@ The demo highlights Playwright’s speed, stability, and flexibility compared to
 -   **npm**: The package manager for JavaScript.
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -106,8 +113,18 @@ playwright-e2e/
 # Configuration
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 =======
+=======
+
+The framework can be configured through `playwright.config.ts`. Key configurations include:
+
+-   Browsers: Chromium, Firefox, WebKit
+-   Viewport sizes
+-   Test timeouts
+-   Parallel execution settings
+>>>>>>> Stashed changes
 
 The framework can be configured through `playwright.config.ts`. Key configurations include:
 
@@ -166,8 +183,15 @@ Page Object Model (POM) is a design pattern that creates a repository for storin
 ## Benefits of POM
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 =======
+=======
+
+-   **Maintainability**: Changes in the UI require updates only in the page classes.
+-   **Reusability**: Common operations can be reused across different tests.
+-   **Readability**: Tests are more readable and easier to understand.
+>>>>>>> Stashed changes
 
 -   **Maintainability**: Changes in the UI require updates only in the page classes.
 -   **Reusability**: Common operations can be reused across different tests.
@@ -316,6 +340,7 @@ npx playwright install
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Checklist
 
 | Task                          | Status              | 
@@ -331,6 +356,8 @@ npx playwright install
 | Data driven tests             | :white_check_mark:  |
 | Accessibility - Axe-core      | :white_check_mark:  |
 | Visual Comparisons            | :black_square_button: |
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
