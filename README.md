@@ -1,9 +1,5 @@
 # 🎭 Playwright Demo
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg "Playwright logo")
 =======
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
