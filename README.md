@@ -1,7 +1,11 @@
 # 🎭 Playwright Demo
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg "Playwright logo")
+=======
+![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
+>>>>>>> Stashed changes
 =======
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
 >>>>>>> Stashed changes
@@ -44,6 +48,9 @@ The demo highlights Playwright’s speed, stability, and flexibility compared to
 -   **Playwright**: A versatile library tailored for browser automation with a focus on reliability.
 -   **TypeScript**: A statically typed superset of JavaScript.
 -   **npm**: The package manager for JavaScript.
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 # Demo site - E-commerce
@@ -90,6 +97,16 @@ playwright-e2e/
 ```
 
 # Configuration
+<<<<<<< Updated upstream
+=======
+
+The framework can be configured through `playwright.config.ts`. Key configurations include:
+
+-   Browsers: Chromium, Firefox, WebKit
+-   Viewport sizes
+-   Test timeouts
+-   Parallel execution settings
+>>>>>>> Stashed changes
 
 The framework can be configured through `playwright.config.ts`. Key configurations include:
 
@@ -130,6 +147,13 @@ A repo with Postman collection for API testing of the same website is available 
 Page Object Model (POM) is a design pattern that creates a repository for storing all web elements. In POM, consider each web page of an application as a separate class file. Each class file will contain only corresponding web page elements. Page objects are organized under the `/pages/` directory, making the test code more readable, maintainable, and less prone to duplication.
 
 ## Benefits of POM
+<<<<<<< Updated upstream
+=======
+
+-   **Maintainability**: Changes in the UI require updates only in the page classes.
+-   **Reusability**: Common operations can be reused across different tests.
+-   **Readability**: Tests are more readable and easier to understand.
+>>>>>>> Stashed changes
 
 -   **Maintainability**: Changes in the UI require updates only in the page classes.
 -   **Reusability**: Common operations can be reused across different tests.
@@ -266,6 +290,7 @@ Usually after Playwright update, browsers need to be updated
 npx playwright install
 ```
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Checklist
 
 | Task                          | Status              | 
@@ -281,5 +306,7 @@ npx playwright install
 | Data driven tests             | :white_check_mark:  |
 | Accessibility - Axe-core      | :white_check_mark:  |
 | Visual Comparisons            | :black_square_button: |
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
