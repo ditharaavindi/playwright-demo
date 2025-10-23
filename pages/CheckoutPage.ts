@@ -33,29 +33,52 @@ export default class CheckoutPage extends BasePage {
     }
 
     async placeOrder() {
-        // Click place order and wait for navigation or page change to reduce flakiness
-        await Promise.all([
-            this.page.waitForNavigation({ waitUntil: 'load', timeout: 60000 }).catch(() => {}),
-            this.clickElement('#place_order'),
-        ]);
+        // Click place order and wait for navigation or order confirmation to reduce flakiness
+        await this.clickElement('#place_order');
+
+        // Wait for either navigation or for order confirmation elements to appear
+        const waitForNav = this.page.waitForNavigation({ waitUntil: 'load', timeout: 60000 }).catch(() => {});
+        const waitForHeading = this.page.getByRole('heading', { name: 'Order received' }).waitFor({ state: 'visible', timeout: 60000 }).catch(() => {});
+        const waitForText = this.page.getByText('Thank you. Your order has been received.').waitFor({ state: 'visible', timeout: 60000 }).catch(() => {});
+
+        // Wait for any of these to complete
+        await Promise.race([waitForNav, waitForHeading, waitForText]);
     }
 
     async fillCardDetails(cardNumber: string, expiryDate: string, cvc: string) {
-        // Look for common Stripe iframe attributes (name, src, title) and wait longer if needed
-        const iframeSelector = 'iframe[name*="__privateStripeFrame"], iframe[src*="stripe"], iframe[title*="Stripe"]';
-        const iframeLocator = this.page.locator(iframeSelector).first();
-        await iframeLocator.waitFor({ state: 'visible', timeout: 90000 });
+        // More robust approach: scan all frames for Stripe card inputs and fill them.
+        const timeout = 90000;
+        const start = Date.now();
+        let cardFrame: any = null;
 
-        // Switch to the iframe and try multiple common placeholders for Stripe elements
-        const cardFrame = await iframeLocator.contentFrame();
-        if (!cardFrame) throw new Error('Unable to access card iframe content frame');
+        while (Date.now() - start < timeout) {
+            for (const f of this.page.frames()) {
+                try {
+                    // look for common placeholders/selectors inside the frame
+                    const hasPlaceholder = (await f.locator('input[placeholder="1234 1234 1234 1234"]').count()) > 0;
+                    const hasNameInputs = (await f.locator('input[name="cardnumber"]').count()) > 0;
+                    if (hasPlaceholder || hasNameInputs) {
+                        cardFrame = f;
+                        break;
+                    }
+                } catch (e) {
+                    // ignore cross-origin/frame access issues until a correct one is found
+                }
+            }
+            if (cardFrame) break;
+            await this.page.waitForTimeout(500);
+        }
 
-        // Try primary placeholders, fall back to common alternatives
+        if (!cardFrame) {
+            throw new Error('Unable to find Stripe card frame within timeout');
+        }
+
+        // Try filling using common selectors
         const attempts = [
             async () => {
-                await cardFrame.getByPlaceholder('1234 1234 1234 1234').fill(cardNumber);
-                await cardFrame.getByPlaceholder('MM / YY').fill(expiryDate);
-                await cardFrame.getByPlaceholder('CVC').fill(cvc);
+                await cardFrame.locator('input[placeholder="1234 1234 1234 1234"]').fill(cardNumber);
+                await cardFrame.locator('input[placeholder="MM / YY"]').fill(expiryDate);
+                await cardFrame.locator('input[placeholder="CVC"]').fill(cvc);
             },
             async () => {
                 await cardFrame.locator('input[name="cardnumber"]').fill(cardNumber);
@@ -67,8 +90,6 @@ export default class CheckoutPage extends BasePage {
         let lastError: any = null;
         for (const attempt of attempts) {
             try {
-                // each attempt may throw if selector not found
-                // give small timeout buffer for actions
                 await attempt();
                 lastError = null;
                 break;
@@ -78,7 +99,7 @@ export default class CheckoutPage extends BasePage {
         }
 
         if (lastError) {
-            throw new Error('Failed to fill card details in Stripe iframe: ' + lastError);
+            throw new Error('Failed to fill card details in Stripe frame: ' + lastError);
         }
     }
 
@@ -88,12 +109,38 @@ export default class CheckoutPage extends BasePage {
     }
 
     async expectCardError(message: string) {
-        // Wait for the iframe to be visible
-        const iframeLocator = this.page.locator('iframe[name*="__privateStripeFrame"]').first();
-        await iframeLocator.waitFor({ state: 'visible', timeout: 50000 });
+        // Search frames for the error message inside Stripe frame or on page
+        const timeout = 60000;
+        const start = Date.now();
+        let found = false;
 
-        // Switch to the iframe and verify the error message
-        const cardFrame = await iframeLocator.contentFrame();
-        await expect(cardFrame?.getByText(message)).toBeVisible();
+        // First check page-level messages
+        try {
+            if ((await this.page.getByText(message).count()) > 0) {
+                await expect(this.page.getByText(message)).toBeVisible();
+                return;
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        while (Date.now() - start < timeout && !found) {
+            for (const f of this.page.frames()) {
+                try {
+                    const loc = f.getByText ? f.getByText(message) : f.locator(`text=${message}`);
+                    if (loc && (await loc.count()) > 0) {
+                        await expect(loc).toBeVisible();
+                        found = true;
+                        break;
+                    }
+                } catch (e) {
+                    // ignore frame access errors
+                }
+            }
+            if (found) break;
+            await this.page.waitForTimeout(500);
+        }
+
+        if (!found) throw new Error('Card error message not found: ' + message);
     }
 }

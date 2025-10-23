@@ -45,9 +45,11 @@ test('Make an order', async ({ page }) => {
     await page.getByRole('link', { name: 'Jenkins Cosmonaut Jenkins Cosmonaut 20,00 лв.' }).click();
     await expect(page).toHaveURL(`${baseURL}product/jenkins-cosmonaut/`);
     await page.getByRole('button', { name: 'Add to cart' }).first().click();
-    await page.locator('#content').getByRole('link', { name: 'View cart ' }).click();
+    const viewCart = page.locator('#content').getByRole('link', { name: /View cart/i }).first();
+    await viewCart.waitFor({ state: 'visible', timeout: 30000 });
+    await viewCart.click();
     await expect(page).toHaveURL(`${baseURL}cart/`);
-    await page.getByRole('link', { name: 'Proceed to checkout ' }).click();
+    await page.getByRole('link', { name: /Proceed to checkout/i }).first().click();
     await expect(page).toHaveURL(`${baseURL}checkout/`);
     await completeCheckout(page, checkout);
     await expect(page.getByRole('heading', { name: 'Order received' })).toBeVisible();
@@ -61,9 +63,11 @@ test('Make an order via search', async ({ page }) => {
     await page.getByRole('searchbox', { name: 'Search for:' }).press('Enter');
     await expect(page).toHaveURL(`${baseURL}product/jenkins-jenkinstein/`);
     await page.getByRole('button', { name: 'Add to cart' }).first().click();
-    await page.locator('#content').getByRole('link', { name: 'View cart ' }).click();
+    const viewCart2 = page.locator('#content').getByRole('link', { name: /View cart/i }).first();
+    await viewCart2.waitFor({ state: 'visible', timeout: 30000 });
+    await viewCart2.click();
     await expect(page).toHaveURL(`${baseURL}cart/`);
-    await page.getByRole('link', { name: 'Proceed to checkout ' }).click();
+    await page.getByRole('link', { name: /Proceed to checkout/i }).first().click();
     await expect(page).toHaveURL(`${baseURL}checkout/`);
     await completeCheckout(page, checkout);
     await expect(page.getByRole('heading', { name: 'Order received' })).toBeVisible();

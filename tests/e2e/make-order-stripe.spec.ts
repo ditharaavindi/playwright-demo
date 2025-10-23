@@ -14,8 +14,8 @@ test.describe('Checkout and Payment Tests', () => {
     await page.getByRole('button', { name: 'Add to cart' }).first().click();
 
         // Proceed to checkout
-        await page.locator('#content').getByRole('link', { name: 'View cart ' }).click();
-        await page.getByRole('link', { name: 'Proceed to checkout ' }).click();
+        await page.locator('#content').getByRole('link', { name: /View cart/i }).first().click();
+        await page.getByRole('link', { name: /Proceed to checkout/i }).first().click();
     });
 
     test('Make an order and pay with VISA Card', async () => {
