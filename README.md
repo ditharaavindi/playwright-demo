@@ -1,18 +1,6 @@
 # 🎭 Playwright Demo
 
 ![Playwright logo](https://playwright.dev/img/playwright-logo.svg "Playwright logo")
-=======
-![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
->>>>>>> Stashed changes
-=======
-![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
->>>>>>> Stashed changes
-=======
-![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
->>>>>>> Stashed changes
-=======
-![Playwright logo](https://playwright.dev/img/playwright-logo.svg 'Playwright logo')
->>>>>>> Stashed changes
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Playwright](https://img.shields.io/badge/playwright-latest-green)
