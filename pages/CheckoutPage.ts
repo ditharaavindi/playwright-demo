@@ -33,19 +33,53 @@ export default class CheckoutPage extends BasePage {
     }
 
     async placeOrder() {
-        await this.clickElement('#place_order');
+        // Click place order and wait for navigation or page change to reduce flakiness
+        await Promise.all([
+            this.page.waitForNavigation({ waitUntil: 'load', timeout: 60000 }).catch(() => {}),
+            this.clickElement('#place_order'),
+        ]);
     }
 
     async fillCardDetails(cardNumber: string, expiryDate: string, cvc: string) {
-        // Wait for the iframe to be visible
-        const iframeLocator = this.page.locator('iframe[name*="__privateStripeFrame"]').first();
-        await iframeLocator.waitFor({ state: 'visible', timeout: 50000 });
+        // Look for common Stripe iframe attributes (name, src, title) and wait longer if needed
+        const iframeSelector = 'iframe[name*="__privateStripeFrame"], iframe[src*="stripe"], iframe[title*="Stripe"]';
+        const iframeLocator = this.page.locator(iframeSelector).first();
+        await iframeLocator.waitFor({ state: 'visible', timeout: 90000 });
 
-        // Switch to the iframe and fill card details
+        // Switch to the iframe and try multiple common placeholders for Stripe elements
         const cardFrame = await iframeLocator.contentFrame();
-        await cardFrame?.getByPlaceholder('1234 1234 1234 1234').fill(cardNumber);
-        await cardFrame?.getByPlaceholder('MM / YY').fill(expiryDate);
-        await cardFrame?.getByPlaceholder('CVC').fill(cvc);
+        if (!cardFrame) throw new Error('Unable to access card iframe content frame');
+
+        // Try primary placeholders, fall back to common alternatives
+        const attempts = [
+            async () => {
+                await cardFrame.getByPlaceholder('1234 1234 1234 1234').fill(cardNumber);
+                await cardFrame.getByPlaceholder('MM / YY').fill(expiryDate);
+                await cardFrame.getByPlaceholder('CVC').fill(cvc);
+            },
+            async () => {
+                await cardFrame.locator('input[name="cardnumber"]').fill(cardNumber);
+                await cardFrame.locator('input[name="exp-date"]').fill(expiryDate);
+                await cardFrame.locator('input[name="cvc"]').fill(cvc);
+            },
+        ];
+
+        let lastError: any = null;
+        for (const attempt of attempts) {
+            try {
+                // each attempt may throw if selector not found
+                // give small timeout buffer for actions
+                await attempt();
+                lastError = null;
+                break;
+            } catch (e) {
+                lastError = e;
+            }
+        }
+
+        if (lastError) {
+            throw new Error('Failed to fill card details in Stripe iframe: ' + lastError);
+        }
     }
 
     async expectOrderReceived() {

@@ -11,7 +11,7 @@ test.describe('Checkout and Payment Tests', () => {
         await page.goto('https://ovcharski.com/shop/');
         await page.locator('#menu-item-126').getByRole('link', { name: 'Shop' }).click();
         await page.getByRole('link', { name: 'Hat 12,00 лв' }).click();
-        await page.getByRole('button', { name: 'Add to cart' }).click();
+    await page.getByRole('button', { name: 'Add to cart' }).first().click();
 
         // Proceed to checkout
         await page.locator('#content').getByRole('link', { name: 'View cart ' }).click();

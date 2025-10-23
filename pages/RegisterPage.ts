@@ -74,7 +74,11 @@ export default class RegisterPage extends BasePage {
     ) {
         await this.fillRegistrationForm(username, firstname, lastname, email, password);
         await this.selectGender(gender);
-        await this.clickRegisterBtn();
+        // Click register and wait for navigation or a change in URL/title
+        await Promise.all([
+            this.page.waitForNavigation({ waitUntil: 'load', timeout: 60000 }).catch(() => {}),
+            this.clickRegisterBtn(),
+        ]);
     }
 
     // Method to verify error message

@@ -16,11 +16,12 @@ export default abstract class BasePage {
 
     // Common method to verify text content
     protected async verifyText(locator: string, expectedText: string, exact: boolean = false) {
+        const loc = this.page.locator(locator).first();
         if (exact) {
-            await expect(this.page.locator(locator)).toHaveText(expectedText);
+            await expect(loc).toHaveText(expectedText);
         } else {
             // Use contains for partial matching and normalize whitespace
-            await expect(this.page.locator(locator)).toContainText(expectedText);
+            await expect(loc).toContainText(expectedText);
         }
     }
 
@@ -36,20 +37,24 @@ export default abstract class BasePage {
         const { exact = false, normalizeWhitespace = true, timeout = 5000 } = options;
 
         if (normalizeWhitespace) {
-            await expect(this.page.locator(locator)).toHaveText(new RegExp(expectedText.replace(/\s+/g, '\\s+')), {
+            const loc = this.page.locator(locator).first();
+            await expect(loc).toHaveText(new RegExp(expectedText.replace(/\s+/g, '\\s+')), {
                 timeout,
             });
         } else if (exact) {
-            await expect(this.page.locator(locator)).toHaveText(expectedText, { timeout });
+            const loc = this.page.locator(locator).first();
+            await expect(loc).toHaveText(expectedText, { timeout });
         } else {
-            await expect(this.page.locator(locator)).toContainText(expectedText, { timeout });
+            const loc = this.page.locator(locator).first();
+            await expect(loc).toContainText(expectedText, { timeout });
         }
     }
 
     // Common method to verify element visibility
     protected async verifyElementVisible(locator: string, options: { timeout?: number } = {}) {
         const { timeout = 25000 } = options;
-        await expect(this.page.locator(locator)).toBeVisible({ timeout });
+        const loc = this.page.locator(locator).first();
+        await expect(loc).toBeVisible({ timeout });
     }
 
     // Common method to capture screenshots
@@ -75,6 +80,6 @@ export default abstract class BasePage {
 
     // Common method to get text content
     protected async getTextContent(locator: string): Promise<string | null> {
-        return await this.page.locator(locator).textContent();
+        return await this.page.locator(locator).first().textContent();
     }
 }
